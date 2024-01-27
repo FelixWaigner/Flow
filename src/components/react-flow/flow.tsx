@@ -1,19 +1,28 @@
-import ReactFlow, {
+import { useCallback } from "react";
+
+import {
+    ReactFlow,
     Controls,
-    Background,
-    MiniMap,
+    addEdge,
+    Connection,
     useNodesState,
     useEdgesState,
-    SelectionMode
-} from 'reactflow';
+    Background,
+    Node,
+    SelectionMode,
+    Edge,
+} from "@xyflow/react";
 
-import 'reactflow/dist/style.css';
+import "@xyflow/react/dist/style.css";
 
-import inputNode from "@/components/nodes/inputNode"
+import InputNode from "@/components/nodes/inputNode";
+import TopicTextNode from "@/components/nodes/topicTextNode"
+import TopicListNode from "@/components/nodes/topicListNode";
 
-const initNodes = [
+
+const initNodes: Node[] = [
     {
-        id: 'a',
+        id: '1',
         data: { label: 'input' },
         type: 'inputNode',
         position: { x: 0, y: 0 },
@@ -21,29 +30,32 @@ const initNodes = [
 
 ];
 
-const nodeTypes = { inputNode: inputNode };
+const nodeTypes = {
+    inputNode: InputNode,
+    topicTextNode: TopicTextNode,
+    topicListNode: TopicListNode,
+};
 
-const initEdges = [
-    {
-        id: 'a-b',
-        source: 'a',
-        target: 'b',
-    },
-];
 
 const panOnDrag = [1, 2];
 
 
-function Flow() {
+const Flow = () => {
     const [nodes, , onNodesChange] = useNodesState(initNodes);
-    const [edges, , onEdgesChange] = useEdgesState(initEdges);
+    const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
+
+    const onConnect = useCallback(
+        (connection: Connection) => setEdges((eds) => addEdge(connection, eds)),
+        [setEdges]
+    );
 
     return (
         <ReactFlow
             nodes={nodes}
-            onNodesChange={onNodesChange}
             edges={edges}
+            onNodesChange={onNodesChange}
             onEdgesChange={onEdgesChange}
+            onConnect={onConnect}
             nodeTypes={nodeTypes}
             fitView
             panOnScroll
@@ -51,11 +63,10 @@ function Flow() {
             panOnDrag={panOnDrag}
             selectionMode={SelectionMode.Partial}
         >
-            <Background />
             <Controls />
-            <MiniMap />
+            <Background />
         </ReactFlow>
-    );
+    )
 }
 
 export default Flow;
