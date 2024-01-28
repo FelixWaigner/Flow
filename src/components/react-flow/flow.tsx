@@ -66,7 +66,6 @@ const Flow = () => {
                 selectionMode={SelectionMode.Partial}
             >
                 <Controls />
-                <Background />
             </ReactFlow>
         </ReactFlowProvider>
     )
