@@ -13,6 +13,8 @@ import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton";
 import addTopicSvg from '@/images/svgs/addTopic.svg'
 
+import { v4 as uuidv4 } from 'uuid';
+
 
 var mockIdeas = [
     {
@@ -59,19 +61,21 @@ function TopicListNode({ id, data }: NodeProps) {
     const createTopicTextNode = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
 
+        const childId = uuidv4();
+
         const ideaTitle = e.currentTarget.value;
 
         reactFlow.addNodes({
-            id: (reactFlow.getNodes().length + 1).toString(),
+            id: childId,
             data: { text: ideaTitle },
             type: 'topicTextNode',
             position: { x: 100, y: 100 },
         })
 
         reactFlow.addEdges({
-            id: `e${id}-${(reactFlow.getEdges().length + 1).toString()}`,
+            id: `e${id}-${childId}`,
             source: id,
-            target: (reactFlow.getNodes().length + 1).toString(),
+            target: childId,
             type: 'default',
         })
 

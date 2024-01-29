@@ -8,6 +8,8 @@ import {
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 
+import { v4 as uuidv4 } from 'uuid';
+
 function InputNode(id: NodeProps) {
 
     var reactFlow = useReactFlow();
@@ -20,14 +22,21 @@ function InputNode(id: NodeProps) {
         e.preventDefault();
         reactFlow.addNodes(
             {
-                id: (reactFlow.getNodes().length + 1).toString(),
+                id: uuidv4(),
                 data: { text: inputText },
                 type: 'topicListNode',
                 position: { x: 100, y: 100 },
             }
         );
+
+        handleNodeDelete(id);
     }, [inputText, reactFlow]);
 
+    const handleNodeDelete = (nodeId: NodeProps) => {
+        reactFlow.deleteElements({
+            nodes: [nodeId]
+        })
+    }
 
     return (
         <div className="input-Node">

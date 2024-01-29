@@ -42,7 +42,7 @@ const panOnDrag = [1, 2];
 
 
 const Flow = () => {
-    const [nodes, , onNodesChange] = useNodesState(initNodes);
+    const [nodes, setNodes, onNodesChange] = useNodesState(initNodes);
     const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
 
     const onConnect = useCallback(
