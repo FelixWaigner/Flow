@@ -8,7 +8,7 @@ import {
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 
-function InputNode() {
+function InputNode(id: NodeProps) {
 
     var reactFlow = useReactFlow();
 
@@ -18,15 +18,16 @@ function InputNode() {
 
     const createTopicListNode = useCallback((e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        reactFlow.addNodes([
+        reactFlow.addNodes(
             {
                 id: (reactFlow.getNodes().length + 1).toString(),
                 data: { text: inputText },
                 type: 'topicListNode',
                 position: { x: 100, y: 100 },
             }
-        ]);
-    }, [inputText]);
+        );
+    }, [inputText, reactFlow]);
+
 
     return (
         <div className="input-Node">

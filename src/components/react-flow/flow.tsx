@@ -1,13 +1,14 @@
 import { useCallback } from "react";
 
 import {
+    ReactFlowProvider,
     ReactFlow,
     Controls,
     addEdge,
     Connection,
     useNodesState,
     useEdgesState,
-    Background,
+    MiniMap,
     Node,
     SelectionMode,
     Edge,
@@ -23,7 +24,7 @@ import TopicListNode from "@/components/nodes/topicListNode";
 const initNodes: Node[] = [
     {
         id: '1',
-        data: { label: 'input' },
+        data: null,
         type: 'inputNode',
         position: { x: 0, y: 0 },
     },
@@ -50,22 +51,24 @@ const Flow = () => {
     );
 
     return (
-        <ReactFlow
-            nodes={nodes}
-            edges={edges}
-            onNodesChange={onNodesChange}
-            onEdgesChange={onEdgesChange}
-            onConnect={onConnect}
-            nodeTypes={nodeTypes}
-            fitView
-            panOnScroll
-            selectionOnDrag
-            panOnDrag={panOnDrag}
-            selectionMode={SelectionMode.Partial}
-        >
-            <Controls />
-            <Background />
-        </ReactFlow>
+        <ReactFlowProvider>
+            <ReactFlow
+                nodes={nodes}
+                edges={edges}
+                onNodesChange={onNodesChange}
+                onEdgesChange={onEdgesChange}
+                onConnect={onConnect}
+                nodeTypes={nodeTypes}
+                fitView
+                panOnScroll
+                selectionOnDrag
+                panOnDrag={panOnDrag}
+                selectionMode={SelectionMode.Partial}
+            >
+                <MiniMap nodeStrokeWidth={3} pannable zoomable inversePan={true} />
+                <Controls />
+            </ReactFlow>
+        </ReactFlowProvider>
     )
 }
 

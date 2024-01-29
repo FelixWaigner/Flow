@@ -1,36 +1,33 @@
-import { memo, useState } from "react";
-import { Position, NodeProps, Handle, useReactFlow } from "@xyflow/react";
+import { memo } from "react";
+import { Position, NodeProps, Handle } from "@xyflow/react";
 
-function topicTextNode({ id, data }: NodeProps) {
-    const { updateNodeData } = useReactFlow();
-    const [text, setText] = useState(data.text);
-    const updateText = (text: string) => {
-        // avoid jumping caret with a synchronous update
-        setText(text);
-        // update actual node data
-        updateNodeData(id, { text });
-    };
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle
+} from "@/components/ui/card"
+
+function TopicTextNode({ id, data }: NodeProps) {
 
     return (
-        <div
-            style={{
-                background: "#eee",
-                color: "#222",
-                padding: 10,
-                fontSize: 12,
-                borderRadius: 10,
-            }}
-        >
-            <div>node {id}</div>
-            <div>
-                <input
-                    onChange={(event) => updateText(event.target.value)}
-                    value={text}
-                />
-            </div>
-            <Handle type="source" position={Position.Right} />
+        <div>
+            <Card className="max-w-96">
+                <CardHeader>
+                    <CardTitle>{data.text}</CardTitle>
+                </CardHeader>
+                <CardDescription>
+
+                </CardDescription>
+                <CardContent>
+                    <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+                </CardContent>
+            </Card>
+            <Handle type="target" position={Position.Left} />
+            <Handle type="source" position={Position.Left} />
         </div>
     );
 }
 
-export default memo(topicTextNode);
+export default memo(TopicTextNode);
