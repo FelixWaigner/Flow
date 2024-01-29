@@ -8,7 +8,7 @@ import {
     Connection,
     useNodesState,
     useEdgesState,
-    Background,
+    MiniMap,
     Node,
     SelectionMode,
     Edge,
@@ -65,6 +65,7 @@ const Flow = () => {
                 panOnDrag={panOnDrag}
                 selectionMode={SelectionMode.Partial}
             >
+                <MiniMap nodeStrokeWidth={3} pannable zoomable inversePan={true} />
                 <Controls />
             </ReactFlow>
         </ReactFlowProvider>
