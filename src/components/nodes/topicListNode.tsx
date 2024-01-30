@@ -70,6 +70,7 @@ function TopicListNode({ id, data }: NodeProps) {
             data: { text: ideaTitle },
             type: 'topicTextNode',
             position: { x: 100, y: 100 },
+            focusable: true,
         })
 
         reactFlow.addEdges({
