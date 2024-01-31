@@ -16,16 +16,18 @@ function InputNode(id: NodeProps) {
 
     const [inputText, setInputText] = useState("");
 
-
-
     const createTopicListNode = useCallback((e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+
         reactFlow.addNodes(
             {
                 id: uuidv4(),
                 data: { text: inputText },
                 type: 'topicListNode',
-                position: { x: 100, y: 100 },
+                position: {
+                    x: id.positionAbsoluteX,
+                    y: id.positionAbsoluteY
+                },
             }
         );
 

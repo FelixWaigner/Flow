@@ -15,7 +15,9 @@ function TopicTextNode({ id, data }: NodeProps) {
 
     const reactFlow = useReactFlow();
 
-    var isNodeSelected = reactFlow.getNode(id)?.selected
+    const isNodeSelected = () => {
+        return reactFlow.getNode(id)?.selected
+    }
 
     const getSelectedText = () => {
         var text
@@ -36,15 +38,15 @@ function TopicTextNode({ id, data }: NodeProps) {
 
     return (
         <div onMouseUp={getSelectedText}>
-            <Card className={"max-w-96 " + (isNodeSelected ? "border-green-400" : "border-gray-50")}>
+            <Card className={"max-w-96 " + (isNodeSelected() ? "border-green-400" : "border-gray-50")}>
                 <CardHeader>
-                    <CardTitle ><span style={{ userSelect: "text" }} className={isNodeSelected ? "nopan nodrag cursor-text" : ""}>{data.text}</span></CardTitle>
+                    <CardTitle ><span style={{ userSelect: "text" }} className={isNodeSelected() ? "nopan nodrag cursor-text" : ""}>{data.text}</span></CardTitle>
                 </CardHeader>
                 <CardDescription>
 
                 </CardDescription>
                 <CardContent>
-                    <p style={{ userSelect: "text" }} className={isNodeSelected ? "nopan nodrag cursor-text" : ""}>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+                    <p style={{ userSelect: "text" }} className={isNodeSelected() ? "nopan nodrag cursor-text" : ""}>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
                 </CardContent>
             </Card>
             <Handle type="target" position={Position.Left} />
