@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input"
 
 import { v4 as uuidv4 } from 'uuid';
 
+
 function InputNode(id: NodeProps) {
 
     var reactFlow = useReactFlow();

@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useEffect, useState, createContext } from "react";
 
 import {
     ReactFlowProvider,
@@ -40,10 +40,14 @@ const nodeTypes = {
 
 const panOnDrag = [1, 2];
 
+export const DraggingSelectionContext = createContext(false);
+
 
 const Flow = () => {
     const [nodes, , onNodesChange] = useNodesState(initNodes);
     const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
+    const [isDragSelection, setIsDragSelection] = useState(false);
+
 
     const onConnect = useCallback(
         (connection: Connection) => setEdges((eds) => addEdge(connection, eds)),
@@ -51,26 +55,29 @@ const Flow = () => {
     );
 
 
-
     return (
-        <ReactFlowProvider>
-            <ReactFlow
-                nodes={nodes}
-                edges={edges}
-                onNodesChange={onNodesChange}
-                onEdgesChange={onEdgesChange}
-                onConnect={onConnect}
-                nodeTypes={nodeTypes}
-                fitView
-                panOnScroll
-                selectionOnDrag
-                panOnDrag={panOnDrag}
-                selectionMode={SelectionMode.Partial}
-            >
-                <MiniMap nodeStrokeWidth={3} pannable zoomable inversePan={true} />
-                <Controls />
-            </ReactFlow>
-        </ReactFlowProvider>
+        <DraggingSelectionContext.Provider value={isDragSelection}>
+            <ReactFlowProvider>
+                <ReactFlow
+                    nodes={nodes}
+                    edges={edges}
+                    onNodesChange={onNodesChange}
+                    onEdgesChange={onEdgesChange}
+                    onConnect={onConnect}
+                    nodeTypes={nodeTypes}
+                    fitView
+                    panOnScroll
+                    selectionOnDrag
+                    panOnDrag={panOnDrag}
+                    selectionMode={SelectionMode.Partial}
+                    onSelectionStart={() => { setIsDragSelection(true) }}
+                    onSelectionEnd={() => { setIsDragSelection(false) }}
+                >
+                    <MiniMap nodeStrokeWidth={3} pannable zoomable inversePan={true} />
+                    <Controls />
+                </ReactFlow>
+            </ReactFlowProvider>
+        </DraggingSelectionContext.Provider>
     )
 }
 
